@@ -1,3 +1,4 @@
+import 'package:baby_buy/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         // Color(0xFFCEE7EF), for the textfields
         //   Color(0xFF00687B), for the buttons
       ),
-      home: const HomePage(),
+      home: const LoginScreen(),
     );
   }
 }
