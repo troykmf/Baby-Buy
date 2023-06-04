@@ -20,15 +20,18 @@ class ElevatedButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
-        side: BorderSide(
-          color: borderSideColor,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(backgroundColor),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
         ),
       ),
       child: Text(
         text,
         style: TextStyle(
+          fontSize: 15.0,
           color: textStyleColor,
           fontFamily: 'SpaceGrotesk',
         ),

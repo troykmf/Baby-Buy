@@ -31,12 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(
-      //   backgroundColor: Theme.of(context).primaryColor,
-      //   centerTitle: true,
-      //   title:
-      // ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, top: 40.0, right: 16.0),
+        padding: const EdgeInsets.only(left: 16.0, top: 30.0, right: 16.0),
         child: ListView(
           children: [
             const Row(
