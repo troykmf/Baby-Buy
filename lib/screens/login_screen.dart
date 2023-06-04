@@ -1,3 +1,4 @@
+import 'package:baby_buy/widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -29,18 +30,31 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Login'),
-        titleTextStyle: const TextStyle(
-          fontFamily: 'SpaceGrotesk',
-          fontSize: 40.0,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
+      // appBar: AppBar(
+      //   backgroundColor: Theme.of(context).primaryColor,
+      //   centerTitle: true,
+      //   title:
+      // ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 16.0, top: 40.0, right: 16.0),
+        child: ListView(
           children: [
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Login',
+                  style: TextStyle(
+                    fontFamily: 'SpaceGrotesk',
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
             const Expanded(
               child: Text(
                 'Welcome back, provide your login details to login to your account',
@@ -57,21 +71,34 @@ class _LoginScreenState extends State<LoginScreen> {
               style: TextStyle(
                 fontFamily: 'SpaceGrotesk',
                 fontWeight: FontWeight.bold,
+                fontSize: 18.0,
               ),
             ),
-            TextField(
-              controller: _email,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              autofocus: true,
-              decoration: const InputDecoration(
-                fillColor: Color(0xFFCEE7EF),
-                hintText: 'e.g name@example.com',
-                hintStyle: TextStyle(
-                  fontFamily: 'SpaceGrotesk',
-                  fontWeight: FontWeight.w300,
-                  color: Colors.grey,
+            const SizedBox(
+              height: 10.0,
+            ),
+            SizedBox(
+              height: 50.0,
+              child: Center(
+                child: TextField(
+                  controller: _email,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: const Color(0xFFCEE7EF),
+                      hintText: 'e.g name@example.com',
+                      hintStyle: const TextStyle(
+                        fontFamily: 'SpaceGrotesk',
+                        fontWeight: FontWeight.w300,
+                        color: Colors.grey,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: BorderSide.none,
+                      )),
                 ),
               ),
             ),
@@ -81,30 +108,39 @@ class _LoginScreenState extends State<LoginScreen> {
               style: TextStyle(
                 fontFamily: 'SpaceGrotesk',
                 fontWeight: FontWeight.bold,
-              ),
-            ),
-            TextField(
-              obscureText: true,
-              controller: _password,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                fillColor: const Color(0xFFCEE7EF),
-                hintText: '***********',
-                hintStyle: const TextStyle(
-                  fontFamily: 'SpaceGrotesk',
-                  fontWeight: FontWeight.w300,
-                  color: Colors.grey,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  borderSide: BorderSide.none,
-                ),
+                fontSize: 18.0,
               ),
             ),
             const SizedBox(
               height: 10.0,
+            ),
+            SizedBox(
+              height: 50.0,
+              child: Center(
+                child: TextField(
+                  obscureText: true,
+                  controller: _password,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: const Color(0xFFCEE7EF),
+                      hintText: '**********',
+                      hintStyle: const TextStyle(
+                        fontFamily: 'SpaceGrotesk',
+                        fontWeight: FontWeight.w300,
+                        color: Colors.grey,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: BorderSide.none,
+                      )),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 5.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -121,35 +157,37 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
-            ElevatedButton(
+            ElevatedButtonWidget(
+              text: 'Login',
+              textStyleColor: Colors.white,
               onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF00687B),
-                elevation: 3.0,
-              ),
-              child: const Text(
-                'Login',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'SpaceGrotesk',
-                ),
-              ),
+              backgroundColor: const Color(0xFF00687B),
+              borderSideColor: Colors.transparent,
             ),
             const SizedBox(
-              height: 20.0,
+              height: 10.0,
             ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                  elevation: 3.0,
-                  side: const BorderSide(color: Color(0xFF00687B))),
-              child: const Text(
-                'Login',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'SpaceGrotesk',
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'OR',
+                  style: TextStyle(
+                    color: Color(0xFF00687B),
+                    fontFamily: 'SpaceGrotesk',
+                  ),
                 ),
-              ),
+              ],
+            ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            ElevatedButtonWidget(
+              text: 'Sign Up',
+              textStyleColor: const Color(0xFF00687B),
+              onPressed: () {},
+              backgroundColor: Colors.white,
+              borderSideColor: const Color(0xFF00687B),
             ),
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:baby_buy/screens/create_account_screen.dart';
 import 'package:baby_buy/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +16,11 @@ class MyApp extends StatelessWidget {
       title: 'Baby Buy',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: const Color(0xFFCEE7EF),
+        primaryColor: const Color(0xFF00687B),
         // Color(0xFFCEE7EF), for the textfields
         //   Color(0xFF00687B), for the buttons
       ),
-      home: const LoginScreen(),
+      home: const CreateAccountScreen(),
     );
   }
 }
