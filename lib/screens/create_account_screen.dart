@@ -1,5 +1,12 @@
+import 'package:baby_buy/services/auth/auth_exceptions.dart';
+import 'package:baby_buy/utilities/dialogs/error_dialog.dart';
 import 'package:baby_buy/widgets/elevated_button_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:baby_buy/services/auth/auth_exceptions.dart';
 import 'package:flutter/material.dart';
+
+import '../services/auth/auth_service.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({Key? key}) : super(key: key);
@@ -115,7 +122,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             height: 7.0,
           ),
           SizedBox(
-            height: 50.0,
+            height: 40.0,
             child: Center(
               child: TextField(
                 controller: _email,
@@ -155,7 +162,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           ),
           SizedBox(
             height: 50.0,
-            child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
               child: TextField(
                 controller: _password,
                 enableSuggestions: false,
@@ -194,7 +202,38 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           ElevatedButtonWidget(
             text: 'Create Account',
             textStyleColor: Colors.white,
-            onPressed: () {},
+            onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
+              try {
+                await AuthService.firebase().createUser(
+                  email: email,
+                  password: password,
+                );
+                AuthService.firebase().sendEmailVerification();
+                // Navigator.of(context).pushNamed(verifyRoute);
+              } on WeakPasswordAuthException {
+                await showErrorDialog(
+                  context,
+                  'Weak password',
+                );
+              } on EmailAlreadyInUseAuthException {
+                await showErrorDialog(
+                  context,
+                  'Email already in use',
+                );
+              } on InvalidEmailAuthException {
+                await showErrorDialog(
+                  context,
+                  'Invalid email address',
+                );
+              } on GenericAuthException {
+                await showErrorDialog(
+                  context,
+                  'Failed to Create Account',
+                );
+              }
+            },
             backgroundColor: const Color(0xFF00687B),
             borderSideColor: const Color(0xFF00687B),
           ),

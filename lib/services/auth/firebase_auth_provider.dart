@@ -1,7 +1,7 @@
 import 'package:baby_buy/firebase_options.dart';
 import 'package:baby_buy/services/auth/auth_provider.dart';
 import 'package:baby_buy/services/auth/auth_user.dart';
-import 'package:baby_buy/services/auth_exceptions.dart';
+import 'package:baby_buy/services/auth/auth_exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 

@@ -1,5 +1,10 @@
+import 'package:baby_buy/constants/routes.dart';
+import 'package:baby_buy/screens/main_screen.dart';
+import 'package:baby_buy/utilities/dialogs/error_dialog.dart';
 import 'package:baby_buy/widgets/elevated_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:baby_buy/services/auth/auth_exceptions.dart';
+import '../services/auth/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -156,24 +161,57 @@ class _LoginScreenState extends State<LoginScreen> {
             ElevatedButtonWidget(
               text: 'Login',
               textStyleColor: Colors.white,
-              onPressed: () {},
+              onPressed: () async {
+                final email = _email.text.trim();
+                final password = _password.text.trim();
+                try {
+                  await AuthService.firebase().logIn(
+                    email: email,
+                    password: password,
+                  );
+                  final user = AuthService.firebase().currentUser;
+                  if (user?.isEmailVerified ?? false) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      mainRoute,
+                      (route) => false,
+                    );
+                  } else {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      createAccountRoute,
+                      (route) => false,
+                    );
+                  }
+                } on UserNotFoundAuthException {
+                  await showErrorDialog(
+                    context,
+                    'User not found',
+                  );
+                } on WrongPasswordAuthException {
+                  await showErrorDialog(
+                    context,
+                    'Wrong credentials',
+                  );
+                } on GenericAuthException {
+                  await showErrorDialog(
+                    context,
+                    'Authentication error',
+                  );
+                }
+              },
               backgroundColor: const Color(0xFF00687B),
               borderSideColor: Colors.transparent,
             ),
             const SizedBox(
               height: 10.0,
             ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'OR',
-                  style: TextStyle(
-                    color: Color(0xFF00687B),
-                    fontFamily: 'SpaceGrotesk',
-                  ),
+            const Center(
+              child: Text(
+                'OR',
+                style: TextStyle(
+                  color: Color(0xFF00687B),
+                  fontFamily: 'SpaceGrotesk',
                 ),
-              ],
+              ),
             ),
             const SizedBox(
               height: 10.0,

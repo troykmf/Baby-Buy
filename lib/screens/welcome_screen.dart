@@ -1,3 +1,4 @@
+import 'package:baby_buy/constants/routes.dart';
 import 'package:baby_buy/widgets/elevated_button_widget.dart';
 import 'package:baby_buy/widgets/read_and_privacy_policy_text_button_widget.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ElevatedButtonWidget(
               text: 'Create Account',
               textStyleColor: Colors.black,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(createAccountRoute);
+              },
               backgroundColor: const Color(0xFFCEE7EF),
               borderSideColor: const Color(0xFFCEE7EF),
             ),
