@@ -1,3 +1,4 @@
+import 'package:baby_buy/constants/routes.dart';
 import 'package:baby_buy/services/auth/auth_exceptions.dart';
 import 'package:baby_buy/utilities/dialogs/error_dialog.dart';
 import 'package:baby_buy/widgets/elevated_button_widget.dart';
@@ -211,7 +212,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   password: password,
                 );
                 AuthService.firebase().sendEmailVerification();
-                // Navigator.of(context).pushNamed(verifyRoute);
+                Navigator.of(context).pushNamed(verifyRoute);
               } on WeakPasswordAuthException {
                 await showErrorDialog(
                   context,
@@ -258,7 +259,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           ElevatedButtonWidget(
             text: 'Login',
             textStyleColor: const Color(0xFF00687B),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(loginRoute);
+            },
             backgroundColor: Colors.white,
             borderSideColor: const Color(0xFF00687B),
           ),

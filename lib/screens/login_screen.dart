@@ -177,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   } else {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      createAccountRoute,
+                      verifyRoute,
                       (route) => false,
                     );
                   }
@@ -219,7 +219,12 @@ class _LoginScreenState extends State<LoginScreen> {
             ElevatedButtonWidget(
               text: 'Sign Up',
               textStyleColor: const Color(0xFF00687B),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  createAccountRoute,
+                  (route) => false,
+                );
+              },
               backgroundColor: Colors.white,
               borderSideColor: const Color(0xFF00687B),
             ),
