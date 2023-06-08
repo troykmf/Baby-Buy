@@ -1,10 +1,10 @@
+import 'package:baby_buy/screens/category_fab_screen.dart';
 import 'package:baby_buy/screens/create_account_screen.dart';
 import 'package:baby_buy/screens/login_screen.dart';
 import 'package:baby_buy/screens/main_screen.dart';
 import 'package:baby_buy/screens/verify_screen.dart';
 import 'package:baby_buy/screens/welcome_screen.dart';
 import 'package:baby_buy/services/auth/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'constants/routes.dart';
@@ -20,21 +20,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Baby Buy',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: const Color(0xFF00687B),
-          // Color(0xFFCEE7EF), for the textfields
-          //   Color(0xFF00687B), for the buttons
-        ),
-        home: const HomePage(),
-        routes: {
-          loginRoute: (context) => const LoginScreen(),
-          createAccountRoute: (context) => const CreateAccountScreen(),
-          welcomeRoute: (context) => const WelcomeScreen(),
-          mainRoute: (context) => const MainScreen(),
-          verifyRoute: (context) => const VerifyScreen(),
-        });
+      title: 'Baby Buy',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: const Color(0xFF00687B),
+        // Color(0xFFCEE7EF), for the textfields
+        //   Color(0xFF00687B), for the buttons
+      ),
+      home: const HomePage(),
+      routes: {
+        loginRoute: (context) => const LoginScreen(),
+        createAccountRoute: (context) => const CreateAccountScreen(),
+        welcomeRoute: (context) => const WelcomeScreen(),
+        mainRoute: (context) => const MainScreen(),
+        verifyRoute: (context) => const VerifyScreen(),
+        categoryFabRoute: (context) => const CategoryFabScreen(),
+      },
+      initialRoute: welcomeRoute,
+    );
   }
 }
 
@@ -53,7 +56,7 @@ class HomePage extends StatelessWidget {
               if (user.isEmailVerified) {
                 return const MainScreen();
               } else {
-                return VerifyScreen();
+                return const VerifyScreen();
               }
             } else {
               return const LoginScreen();

@@ -83,27 +83,25 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             height: 7.0,
           ),
           SizedBox(
-            height: 50.0,
-            child: Center(
-              child: TextField(
-                controller: _displayName,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                autofocus: true,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color(0xFFCEE7EF),
-                  hintText: 'e.g Bello Toluloppe',
-                  hintStyle: const TextStyle(
-                    fontFamily: 'SpaceGrotesk',
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide.none,
-                  ),
+            height: 40.0,
+            child: TextField(
+              controller: _displayName,
+              enableSuggestions: false,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+              autofocus: true,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color(0xFFCEE7EF),
+                hintText: 'e.g Bello Toluloppe',
+                hintStyle: const TextStyle(
+                  fontFamily: 'SpaceGrotesk',
+                  fontWeight: FontWeight.w300,
+                  color: Colors.grey,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide.none,
                 ),
               ),
             ),
@@ -124,25 +122,23 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           ),
           SizedBox(
             height: 40.0,
-            child: Center(
-              child: TextField(
-                controller: _email,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color(0xFFCEE7EF),
-                  hintText: 'e.g name@example.com',
-                  hintStyle: const TextStyle(
-                    fontFamily: 'SpaceGrotesk',
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide.none,
-                  ),
+            child: TextField(
+              controller: _email,
+              enableSuggestions: false,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color(0xFFCEE7EF),
+                hintText: 'e.g name@example.com',
+                hintStyle: const TextStyle(
+                  fontFamily: 'SpaceGrotesk',
+                  fontWeight: FontWeight.w300,
+                  color: Colors.grey,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide.none,
                 ),
               ),
             ),
@@ -162,27 +158,25 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             height: 7.0,
           ),
           SizedBox(
-            height: 50.0,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: TextField(
-                controller: _password,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: const Color(0xFFCEE7EF),
-                  hintText: '***********',
-                  hintStyle: const TextStyle(
-                    fontFamily: 'SpaceGrotesk',
-                    fontWeight: FontWeight.w300,
-                    color: Colors.grey,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: BorderSide.none,
-                  ),
+            height: 40.0,
+            child: TextField(
+              obscureText: true,
+              controller: _password,
+              enableSuggestions: false,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color(0xFFCEE7EF),
+                hintText: '***********',
+                hintStyle: const TextStyle(
+                  fontFamily: 'SpaceGrotesk',
+                  fontWeight: FontWeight.w300,
+                  color: Colors.grey,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                  borderSide: BorderSide.none,
                 ),
               ),
             ),

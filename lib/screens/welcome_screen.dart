@@ -92,7 +92,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ElevatedButtonWidget(
               text: 'Login',
               textStyleColor: Colors.white,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(loginRoute);
+              },
               backgroundColor: Colors.black,
               borderSideColor: Colors.black,
             ),

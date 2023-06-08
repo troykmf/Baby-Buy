@@ -13,6 +13,7 @@ Future<T?> showGenericDialog<T>({
     context: context,
     builder: (context) {
       return AlertDialog(
+        backgroundColor: Colors.black,
         title: Text(title),
         titleTextStyle: const TextStyle(
           fontFamily: 'SpaceGrotesk',
