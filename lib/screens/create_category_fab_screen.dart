@@ -1,3 +1,6 @@
+import 'package:baby_buy/services/cloud/cloud_category.dart';
+import 'package:baby_buy/services/cloud/firebase_cloud_category_storage.dart';
+import 'package:baby_buy/utilities/generics/get_arguments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,15 +12,50 @@ class CategoryFabScreen extends StatefulWidget {
 }
 
 class _CategoryFabScreenState extends State<CategoryFabScreen> {
+  CloudCategory? _category;
+
+  late final FirebaseCloudCategoryStorage _categoryService;
+
   late final TextEditingController _title;
   late final TextEditingController _description;
 
   @override
   void initState() {
+    _categoryService = FirebaseCloudCategoryStorage();
     _title = TextEditingController();
     _description = TextEditingController();
     super.initState();
   }
+
+  void _textControllerListener() async {
+    final category = _category;
+    if (category == null) {
+      return;
+    }
+    final title = _title.text;
+    final description = _description.text;
+    await _categoryService.updateCategory(
+      documentId: category.documentId,
+      title: title,
+      description: description,
+    );
+  }
+
+  void _setupTextControllerListener() {
+    _title.removeListener(_textControllerListener);
+    _title.addListener(_textControllerListener);
+    _description.removeListener(_textControllerListener);
+    _description.addListener(_textControllerListener);
+  }
+
+  // Future<CloudCategory> createOrGetExistingCategory(
+  //     BuildContext context) async {
+  //   final widgetCategory = context.getArgument<CloudCategory>();
+  //
+  //   if (widgetCategory != null) {
+  //     _category = widgetCategory;
+  //   }
+  // }
 
   @override
   void dispose() {
