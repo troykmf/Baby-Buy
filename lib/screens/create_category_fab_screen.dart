@@ -1,3 +1,4 @@
+import 'package:baby_buy/services/auth/auth_service.dart';
 import 'package:baby_buy/services/cloud/cloud_category.dart';
 import 'package:baby_buy/services/cloud/firebase_cloud_category_storage.dart';
 import 'package:baby_buy/utilities/generics/get_arguments.dart';
@@ -48,17 +49,55 @@ class _CategoryFabScreenState extends State<CategoryFabScreen> {
     _description.addListener(_textControllerListener);
   }
 
-  // Future<CloudCategory> createOrGetExistingCategory(
-  //     BuildContext context) async {
-  //   final widgetCategory = context.getArgument<CloudCategory>();
-  //
-  //   if (widgetCategory != null) {
-  //     _category = widgetCategory;
-  //   }
-  // }
+  Future<CloudCategory> createOrGetExistingCategory(
+      BuildContext context) async {
+    final widgetCategory = context.getArgument<CloudCategory>();
+
+    if (widgetCategory != null) {
+      _category = widgetCategory;
+      _title.text = widgetCategory.title;
+      _description.text = widgetCategory.description;
+      return widgetCategory;
+    }
+
+    final existingCategory = _category;
+    if (existingCategory != null) {
+      return existingCategory;
+    }
+
+    final currentUser = AuthService.firebase().currentUser!;
+
+    final userId = currentUser.id;
+    final newCategory =
+        await _categoryService.createCategory(ownerUserId: userId);
+    _category = newCategory;
+    return newCategory;
+  }
+
+  void _deleteCategoryIfTextIsEmpty() {
+    final category = _category;
+    if (_title.text.isEmpty && _description.text.isEmpty && category != null) {
+      _categoryService.deleteCategory(documentId: category.documentId);
+    }
+  }
+
+  void _saveCategoryIfTextNotEmpty() async {
+    final category = _category;
+    final title = _title.text;
+    final description = _description.text;
+    if (category != null && title.isNotEmpty && description.isNotEmpty) {
+      await _categoryService.updateCategory(
+        documentId: category.documentId,
+        title: title,
+        description: description,
+      );
+    }
+  }
 
   @override
   void dispose() {
+    _deleteCategoryIfTextIsEmpty();
+    _saveCategoryIfTextNotEmpty();
     _title.dispose();
     _description.dispose();
     super.dispose();
@@ -67,68 +106,151 @@ class _CategoryFabScreenState extends State<CategoryFabScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.deepPurpleAccent,
-        body: ListView(
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: const Color(0xFFCEE7EF),
+        onPressed: () {
+          _saveCategoryIfTextNotEmpty();
+          Navigator.of(context).pop();
+        },
+        label: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Icon(
-                  CupertinoIcons.clear_circled,
-                  size: 40.0,
-                ),
-              ],
+            Icon(
+              CupertinoIcons.check_mark,
+              color: Colors.black,
             ),
-            const Text(
-              'Enter new category',
+            SizedBox(
+              width: 10.0,
+            ),
+            Text(
+              'Save',
               style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.w600,
                 fontFamily: 'SpaceGrotesk',
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 30.0,
-                  width: 3.0,
-                  color: Colors.black,
-                ),
-                const SizedBox(
-                  width: 15.0,
-                ),
-                SizedBox(
-                  height: 40.0,
-                  child: TextField(
-                    obscureText: true,
-                    controller: _description,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      hintText: 'Title: Bags',
-                      hintStyle: const TextStyle(
+          ],
+        ),
+      ),
+      backgroundColor: Colors.deepPurple.shade500,
+      body: FutureBuilder(
+        future: createOrGetExistingCategory(context),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              _setupTextControllerListener();
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0, vertical: 16.0),
+                child: ListView(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: const Icon(
+                            CupertinoIcons.clear_circled,
+                            size: 40.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 90.0,
+                    ),
+                    const Text(
+                      'Enter new category',
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.w600,
                         fontFamily: 'SpaceGrotesk',
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide.none,
                       ),
                     ),
-                  ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 30.0,
+                          width: 3.0,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(
+                          width: 5.0,
+                        ),
+                        SizedBox(
+                          width: 350.0,
+                          child: TextField(
+                            controller: _title,
+                            enableSuggestions: true,
+                            autocorrect: true,
+                            keyboardType: TextInputType.text,
+                            decoration: const InputDecoration(
+                              hintText: 'Title: Bags',
+                              hintStyle: TextStyle(
+                                fontFamily: 'SpaceGrotesk',
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                              // enabledBorder: OutlineInputBorder(
+                              //   borderRadius: BorderRadius.circular(20.0),
+                              //   borderSide: BorderSide.none,
+                              // ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 5.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 35.0,
+                          width: 3.0,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(
+                          width: 5.0,
+                        ),
+                        SizedBox(
+                          width: 350.0,
+                          child: TextField(
+                            controller: _description,
+                            enableSuggestions: true,
+                            autocorrect: true,
+                            keyboardType: TextInputType.text,
+                            decoration: const InputDecoration(
+                              hintText: 'describe the item',
+                              hintStyle: TextStyle(
+                                fontFamily: 'SpaceGrotesk',
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                              ),
+                              // enabledBorder: OutlineInputBorder(
+                              //   borderRadius: BorderRadius.circular(20.0),
+                              //   borderSide: BorderSide.none,
+                              // ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            TextField(
-              controller: _description,
-            )
-          ],
-        ));
+              );
+            default:
+              const CircularProgressIndicator();
+          }
+          return const CircularProgressIndicator();
+        },
+      ),
+    );
   }
 }
