@@ -12,7 +12,7 @@ class CategoryListView extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
-  final List<CloudCategory> category;
+  final Iterable<CloudCategory> category;
   final CategoryCallBack onDeleteCategory;
   final CategoryCallBack onTap;
 

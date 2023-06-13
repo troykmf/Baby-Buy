@@ -81,23 +81,23 @@ class _CategoryFabScreenState extends State<CategoryFabScreen> {
     }
   }
 
-  void _saveCategoryIfTextNotEmpty() async {
-    final category = _category;
-    final title = _title.text;
-    final description = _description.text;
-    if (category != null && title.isNotEmpty && description.isNotEmpty) {
-      await _categoryService.updateCategory(
-        documentId: category.documentId,
-        title: title,
-        description: description,
-      );
-    }
-  }
+  // void _saveCategoryIfTextNotEmpty() async {
+  //   final category = _category;
+  //   final title = _title.text;
+  //   final description = _description.text;
+  //   if (category != null && title.isNotEmpty && description.isNotEmpty) {
+  //     await _categoryService.updateCategory(
+  //       documentId: category.documentId,
+  //       title: title,
+  //       description: description,
+  //     );
+  //   }
+  // }
 
   @override
   void dispose() {
     _deleteCategoryIfTextIsEmpty();
-    _saveCategoryIfTextNotEmpty();
+    // _saveCategoryIfTextNotEmpty();
     _title.dispose();
     _description.dispose();
     super.dispose();
@@ -109,7 +109,7 @@ class _CategoryFabScreenState extends State<CategoryFabScreen> {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: const Color(0xFFCEE7EF),
         onPressed: () {
-          _saveCategoryIfTextNotEmpty();
+          createOrGetExistingCategory(context);
           Navigator.of(context).pop();
         },
         label: const Row(
@@ -133,6 +133,15 @@ class _CategoryFabScreenState extends State<CategoryFabScreen> {
           ],
         ),
       ),
+
+      /// must understand
+      /// since I already have a category ListTile screen, all i nned now is a
+      /// category container inside a singleChildScrollView wrapped inside a
+      /// sizedBox or Container to give it a constraint or constant height of
+      /// how much space it can occupy on the main screen. The tile is going to
+      /// be inside the container as another screen but created inside the
+      /// container screen, that is, as the container screen is created, the
+      /// listview screen is also created.
       backgroundColor: Colors.deepPurple.shade500,
       body: FutureBuilder(
         future: createOrGetExistingCategory(context),

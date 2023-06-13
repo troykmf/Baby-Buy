@@ -17,6 +17,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  CloudCategory? category__;
   late final GlobalKey<ScaffoldState> _scaffoldKey;
   late final FirebaseCloudCategoryStorage _categoryService;
 
@@ -123,8 +124,9 @@ class _MainScreenState extends State<MainScreen> {
               case ConnectionState.waiting:
               case ConnectionState.active:
                 if (snapshot.hasData) {
-                  final allCategory = snapshot.data as List<CloudCategory>;
-                  return Column(
+                  final category1 = category__;
+                  final allCategory = snapshot.data as Iterable<CloudCategory>;
+                  return ListView(
                     children: [
                       Center(
                         child: TextButton(
@@ -134,19 +136,31 @@ class _MainScreenState extends State<MainScreen> {
                           child: const Text('Open'),
                         ),
                       ),
-                      CategoryListView(
-                          category: allCategory,
-                          onDeleteCategory: (category) async {
-                            await _categoryService.deleteCategory(
-                              documentId: category.documentId,
-                            );
-                          },
-                          onTap: (category) {
-                            Navigator.of(context).pushNamed(
-                              categoryFabRoute,
-                              arguments: category,
-                            );
-                          }),
+                      SizedBox(
+                        height: 300,
+                        // width: double.infinity,
+                        //             child: Container(
+                        //             child: Column(
+                        //
+                        //             children: [
+                        //               Text(category1!.title)
+                        // ],
+                        //             ),
+                        //             )
+                        child: CategoryListView(
+                            category: allCategory,
+                            onDeleteCategory: (category) async {
+                              await _categoryService.deleteCategory(
+                                documentId: category.documentId,
+                              );
+                            },
+                            onTap: (category) {
+                              Navigator.of(context).pushNamed(
+                                categoryFabRoute,
+                                arguments: category,
+                              );
+                            }),
+                      ),
                     ],
                   );
                 } else {
