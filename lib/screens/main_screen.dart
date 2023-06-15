@@ -1,4 +1,3 @@
-import 'package:baby_buy/category/category_list_view.dart';
 import 'package:baby_buy/services/auth/auth_service.dart';
 import 'package:baby_buy/services/cloud/cloud_category.dart';
 import 'package:baby_buy/services/cloud/firebase_cloud_category_storage.dart';
@@ -6,6 +5,7 @@ import 'package:baby_buy/widgets/drawer_list_tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../category/category_list_view.dart';
 import '../constants/routes.dart';
 import '../widgets/elevated_button_widget.dart';
 
@@ -108,7 +108,8 @@ class _MainScreenState extends State<MainScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).pushNamed(
-              categoryFabRoute,
+              // categoryFabRoute,
+              createItemRoute,
             );
           },
           backgroundColor: const Color(0xFFCEE7EF),
@@ -137,16 +138,10 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 300,
-                        // width: double.infinity,
-                        //             child: Container(
-                        //             child: Column(
-                        //
-                        //             children: [
-                        //               Text(category1!.title)
-                        // ],
-                        //             ),
-                        //             )
+                        height: 250.0,
+                      ),
+                      SizedBox(
+                        height: 400,
                         child: CategoryListView(
                             category: allCategory,
                             onDeleteCategory: (category) async {

@@ -1,3 +1,5 @@
+import 'package:baby_buy/item/create_item_screen.dart';
+import 'package:baby_buy/item/item_screen.dart';
 import 'package:baby_buy/screens/create_category_fab_screen.dart';
 import 'package:baby_buy/screens/create_account_screen.dart';
 import 'package:baby_buy/screens/login_screen.dart';
@@ -35,6 +37,8 @@ class MyApp extends StatelessWidget {
         mainRoute: (context) => const MainScreen(),
         verifyRoute: (context) => const VerifyScreen(),
         categoryFabRoute: (context) => const CategoryFabScreen(),
+        itemRoute: (context) => const ItemDisplayScreen(),
+        createItemRoute: (context) => const CreateItem(),
       },
       initialRoute: welcomeRoute,
     );

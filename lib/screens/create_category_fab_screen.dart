@@ -115,6 +115,12 @@ class _CategoryFabScreenState extends State<CategoryFabScreen> {
         label: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // Container(
+            //   decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //         image: AssetImage(assetName))
+            //   ),
+            // ),
             Icon(
               CupertinoIcons.check_mark,
               color: Colors.black,
